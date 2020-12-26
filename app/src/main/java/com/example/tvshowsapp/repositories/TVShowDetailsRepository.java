@@ -5,30 +5,30 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.tvshowsapp.network.ApiClient;
 import com.example.tvshowsapp.network.ApiService;
-import com.example.tvshowsapp.responses.TVShowResponse;
+import com.example.tvshowsapp.responses.TVShowDetailsResponses;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MostPopularTVShowsRepository {
+public class TVShowDetailsRepository {
 
     private ApiService apiService;
 
-    public MostPopularTVShowsRepository() {
+    public TVShowDetailsRepository() {
         apiService = ApiClient.getRetrofit().create(ApiService.class);
     }
 
-    public LiveData<TVShowResponse> getMostPopularTVShowa(int page) {
-        MutableLiveData<TVShowResponse> data = new MutableLiveData<>();
-        apiService.getMostPopularTvShows(page).enqueue(new Callback<TVShowResponse>() {
+    public LiveData<TVShowDetailsResponses> getTVShowDetails(String tvShowId){
+        MutableLiveData<TVShowDetailsResponses> data = new MutableLiveData<>();
+        apiService.getTVShowDetail(tvShowId).enqueue(new Callback<TVShowDetailsResponses>() {
             @Override
-            public void onResponse(Call<TVShowResponse> call, Response<TVShowResponse> response) {
+            public void onResponse(Call<TVShowDetailsResponses> call, Response<TVShowDetailsResponses> response) {
                 data.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<TVShowResponse> call, Throwable t) {
+            public void onFailure(Call<TVShowDetailsResponses> call, Throwable t) {
                 data.setValue(null);
             }
         });
